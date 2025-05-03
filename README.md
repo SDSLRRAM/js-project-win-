@@ -34,5 +34,80 @@
 - `obj1`과 `obj2`는 참조형(reference) 객체로, `obj2 = obj1` 이후 `obj2.c`를 변경하면 `obj1.c`도 함께 변경됩니다.
 - 이 예제를 통해 기본형은 **값 복사**, 참조형은 **주소(참조) 복사**가 이루어짐을 확인할 수 있습니다.
 
+### 1-8.js
+- `a`와 `b`는 기본형(primitive) 변수로, `b = a` 이후 `b`의 값을 변경해도 `a`에는 영향을 주지 않음
+- `obj1`과 `obj2`는 참조형 객체, `obj2 = obj1` 이후 `obj2.c`를 변경하면 `obj1.c`도 함께 변경.
 
+### 1-9.js
+- `a`와 `b`는 기본형 변수로 `b = a` 이후 `b` 값을 바꿔도 `a`에는 영향이 없음.
+- `obj1`과 `obj2`는 참조형 객체로, 처음에는 같은 객체를 참조함.
+- `obj2 = { c: 20, d: 'ddd' }`로 새로운 객체를 재할당하면, `obj2`는 더 이상 `obj1`과 연결 X.
+- 따라서 `obj2`를 변경해도 `obj1`에는 영향이 없는 것을 알 수 있음.
 
+### 1-10.js
+- 객체 `user`를 함수 `changeName`에 인자로 전달하여 이름을 변경.
+- 함수 내부에서 `var newUser = user`로 같은 객체를 참조하고 있음, `newUser.name = newName`은 `user.name`도 
+  함께 변경
+- 결과적으로 `user`와 `user2`는 같은 객체를 가리키므로 `user === user2`는 `true` 임을 알 수 있음.
+
+### 1-11.js
+- 객체 `user`를 함수에 전달하지만, 함수 내부에서 새로운 객체를 만들어 반환.
+- 새로운 객체는 `name`만 변경하고, 나머지 속성(`gender`)은 원본 `user`에서 복사해 사용.
+- 이로 인해 `user`와 `user2`는 서로 다른 객체이며, `user !== user2`는 `true` 임을 알 수 있음.
+
+### 1-12.js
+- 함수 `copyObject`는 전달받은 객체 `target`의 모든 속성을 새로운 객체 `result`에 복사.
+- `for...in` 문을 사용해 속성명을 반복하며, 각 속성의 값을 복사합니다.
+- 얕은 복사(shallow copy)로, 중첩 객체는 참조만 복사됨.
+- 원본 객체를 변경하지 않고 복사본을 만들어 사용할 수 있음.
+
+### 1-13.js
+- `copyObject` 함수를 사용하여 객체 `user`를 복사해 `user2`를 생성.
+- 복사본 `user2`의 `name` 속성을 `'Jung'`으로 변경해도 원본 `user`의 `name`은 그대로 유지.
+- `user !== user2`는 `true`이며, 두 객체는 서로 다른 메모리 주소를 가지는 독립된 객체.
+
+### 1-14.js
+- `copyObject` 함수를 사용하여 객체 `user`를 복사한 `user2`는 독립된 개체.
+- `user.name`과 `user2.name`은 서로 다르게 변경되어 독립성이 유지됨.
+- 하지만 중첩된 객체 `urls`는 얕은 복사로 인해 동일한 참조를 공유함.
+
+### 1-15.js
+- `copyObject` 함수를 사용해 `user` 객체를 복사 후, 중첩 객체 `urls`도 별도로 복사하여 `user2`에 할당.
+- `user.urls`와 `user2.urls`는 서로 다른 객체가 되어 참조가 분리죔.
+- `user.urls.portfolio`와 `user2.urls.portfolio`는 서로 영향을 주지 않으며, 변경 시 값이 독립적으로 유지함.
+
+### 1-16.js
+- 함수 `copyObjectDeep`는 객체를 재귀적 순회 진행, 모든 하위 속성까지 복사하는 깊은 복사(deep copy)를 수행.
+- `typeof target === 'object' && target !== null` 구문으로 객체만 재귀 호출하고, 원시 값은 그대로 반환.
+
+### 1-17.js
+- `copyObjectDeep` 를 사용해 객체 `obj`를 깊은 복사하여 `obj2`를 생성함.
+- 복사 후 `obj2.a`, `obj2.b.c`, `obj.b.d[1]` 값을 각각 수정하지만, 두 객체는 서로 영향을 주지 않음.
+- `obj`와 `obj2`는 중첩 객체와 배열까지 모두 다른 참조를 가지므로 복사가 정상적으로 동작함을 알 수 있음
+
+### 1-18.js
+- `copyObjectViaJSON` 함수는 객체를 'JSON.stringify()'로 문자열화한 뒤, `JSON.parse()`로 다시 객체화함
+   --> 깊은 복사
+- 이 방식은 중첩 객체와 배열 구조를 복사할 수 있지만, `function`은 JSON으로 변환되지 않음.
+- 결과적으로 `obj2`에는 `func1`, `func2`가 존재하지 않음.
+- 간단한 구조의 깊은 복사에는 JSON 방식이 유용하지만, 함수나 `undefined`, `Symbol` 등은 제외하는 한계 존재.
+
+### 1-19.js
+- JavaScript에서 `undefined`가 발생하는 주요 경우들.
+
+### 1-20.js
+- JavaScript에서 배열의 'empty' 과 명시적 `undefined` 값의 차이를 보여줌.
+
+### 1-21.js
+- `undefined` 값이 명시된 배열과, empty slot이 있는 배열을 다양한 함수(`forEach`, `map`, `filter`, `reduce`)
+   에 적용하여 동작 차이를 비교함.
+
+### 1-22.js
+- JavaScript에서 `null`의 역할 확인 할 수 있음. `null`은 원시값이지만 `typeof`는 `object`로 반환함.
+
+### 2-1.js
+- 함수 스코프와 변수 호이스팅(hoisting)이 의 동작 방식을 보여줌.
+- 같은 이름의 변수라도 스코프가 다르면 완전히 별개의 변수이며, 호이스팅으로 인해 예기치 않은 결과가 발생할 수 
+   있다는 점을 알 수 있음
+
+   
