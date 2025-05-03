@@ -210,6 +210,49 @@
 ### 3-10.js
 - 내부 함수에서 `this`가 바뀌는 문제를 해결하기 위한 전통적인 방식인 `var self = this'의 활용.
 
+### 3-11.js
+- outer()는 obj.outer()로 호출되므로 this === obj, innerFunc는 화살표 함수이므로 자신의 this를 가지지 않음.
+  → 따라서 outer()의 this인 obj를 그대로 상속받아 유지.
+
+### 3-12.js
+- 세 가지 상황(setTimeout 콜백, forEach 콜백 이벤트 핸들러 콜백)에서의 `this` 바인딩 결과를 비교.
+
+### 3-13.js
+- `new` 키워드를 사용해 Constructor Function으로 객체 인스턴스를 생성하는 방식 확인.
+
+### 3-14.js
+- `call` 메서드를 사용해 함수의 `this`를 명시적으로 바인딩하는 방법.
+- func(1, 2, 3)은 일반 함수 호출이므로 this는 전역 객체(window). 
+- func.call({ x: 1 }, 4, 5, 6)은 call을 통해 this를 { x: 1 }로 명시 바인딩함.
+- 이후의 인자는 순서대로 함수의 매개변수 a, b, c에 전달됨.
+
+### 3-15.js
+- 객체의 메서드를 `call`을 이용해 다른 객체 컨텍스트에서 호출함으로써, `this` 바인딩을 변경할 수 있음.
+- obj.method(2, 3)에서는 this === obj → this.a === 1, obj.method.call({ a: 4 }, 5, 6)에서는 this === { a: 4 }
+  로 명시 바인딩 → 메서드의 로직은 동일하지만 실행 컨텍스트(this)가 바뀜.
+
+### 3-16.js
+- `apply()` 메서드를 통해 `this`를 명시적으로 바인딩**하고, 인자들을 배열로 전달하는 방식.
+- 특히 배열 데이터로 매개변수를 동적으로 전달해야 하는 상황에서 apply가 유용함.
+
+### 3-17.js
+- 유사 배열 객체(array-like object)**에 `Array.prototype` 메서드를 `call`로 적용하는 방식과, 이를 실제 배열로 
+  변환하는 패턴.
+
+### 3-18.js
+- `arguments`와 `NodeList` 같은 유사 배열 객체를 `Array.prototype.slice.call()`을 통해 진짜 배열로 변환하고,  
+  이를 이용해 `forEach()` 메서드를 사용.
+- Array.prototype.slice.call(obj) -> slice는 원래 배열을 복사하는 메서드지만, call(obj)로 호출하면 유사   
+  배열 객체를 배열로 변환 가능.
+
+### 3-19.js
+- 문자열(`String`)도 인덱스와 length를 가진 유사 배열 객체이기 때문에 `Array.prototype` 메서드를 사용할 수 
+  있지만, 일부 메서드는 읽기 전용이므로 오류가 발생할 수 있음.
+
+### 3-20.js
+- `Array.from()`을 사용해 유사 배열 객체(array-like object)을 실제 배열로 변환하는 간단하고 권장되는 방법.
+- 이전에는 Array.prototype.slice.call(obj) 방식으로 변환했지만, Array.from()은 가독성과 직관성 모두 우수함.
+
 
 
 
