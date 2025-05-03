@@ -253,6 +253,59 @@
 - `Array.from()`을 사용해 유사 배열 객체(array-like object)을 실제 배열로 변환하는 간단하고 권장되는 방법.
 - 이전에는 Array.prototype.slice.call(obj) 방식으로 변환했지만, Array.from()은 가독성과 직관성 모두 우수함.
 
+### 3-21.js
+- `call()`과 `apply()`를 사용해 *생성자 함수 간의 상속(생성자 상속)을 구현하는 방식.
+- Student, Employee가 Person의 로직을 실행하여 공통 프로퍼티를 상속받음.
+- 프로토타입 체인을 구성하지 않고도 속성 상속을 구현하는 방식.
 
+### 3-22.js
+- `forEach()`를 사용하여 배열의 최댓값과 최솟값을 동시에 구하는 방법.
+- `max = (min = numbers[0])`와 같은 동시 초기화 방식을 사용하여 코드 간결성을 높임.
+
+### 3-23.js
+- `Math.max()`와 `Math.min()`을 `apply()`와 함께 사용해 배열 전체에서 최댓값과 최솟값을 구하는 방법.
+-  null은 this를 의미하며, Math.max/min는 this에 의존하지 않기 때문에 아무 값이나 사용 가능.
+
+### 3-24.js
+- 스프레드 연산자(...)를 사용해 배열 내 최댓값과 최솟값을 `Math.max()`와 `Math.min()`으로 간단하게 구하는 방법.
+- ...numbers는 배열을 개별 인자처럼 펼쳐서 함수에 전달함 이는 Math.max(10, 20, 3, 16, 45)와 동일한 효과.
+- 이전 방식인 apply()보다 가독성이 좋고 코드도 짧음.
+
+### 3-25.js
+- `bind()` 메서드를 사용하여 함수의 `this`를 고정, 일부 인자를 미리 지정 (부분 적용, partial application) 하는   
+  방법
+
+### 3-26.js
+- `bind()`를 통해 생성된 함수 `name` 속성이  원래 함수 이름 앞에 "bound "가 붙음.
+- func.name → 원래 함수의 이름인 "func"
+- bindFunc.name → "bound func": bind()로 생성된 함수는 자동으로 "bound "가 붙음
+
+### 3-27.js
+- inner function에서 `this`가 전역 객체로 바인딩되는 문제를 `call(this)`를 통해 해결하는 방법.
+- innerFunc()는 일반 함수이기 때문에 호출 시 기본적으로 this === window (또는 undefined in strict mode)
+- 그러나 innerFunc.call(this)는 상위 함수의 this (obj)를 명시적으로 넘겨주었기 때문에 내부 함수에서도 
+  this === obj가 유지됨.
+
+### 3-28.js
+- `setTimeout()`에서 객체 메서드를 직접 전달하면 `this`가 전역 객체로 바인딩 됨. -> `bind(this)`로 해결하는 방법.
+- setTimeout(this.logThis, 500): this.logThis는 함수 참조만 넘기고 obj 컨텍스트는 잃어버림
+- 실행 시 this === window (strict mode에선 undefined) 
+- setTimeout(this.logThis.bind(this), 1000): bind(this)로 미리 this를 obj에 고정한 새 함수 생성.
+  실행 시에도 this === obj 유지.
+
+### 3-29.js
+- 화살표 함수가 자신의 `this`를 가지지 않고, 상위 스코프의 `this`를 그대로 참조함.
+- 화살표 함수는 일반 함수와 달리 this가 정적으로 결정됨. 생성 시점의 this를 캡처하여 그대로 유지
+
+### 3-30.js
+- `forEach()`의 두 번째 인자를 사용해 콜백 함수 내부에서 `this`가 외부 객체(`report`)를 참조하도록 바인딩함.
+- arguments는 유사 배열 객체이므로 slice.call()로 배열로 변환
+- args.forEach(callback, this)에서 두 번째 인자 this는 callback 내부의 this로 사용됨
+- this.sum과 this.count는 전역 객체가 아닌 report를 정확히 참조하게 됨
+
+### 3-31.js
+- 해당 메서드들은 콜백 함수와 함께 `thisArg`를 두 번째 인자로 받을 수 있음.
+- `thisArg`는 콜백 함수 내부에서 `this`로 사용될 값을 의미.
+- 콜백에서 this 바인딩이 필요한 상황에서 유용하게 활용될 수 있는 메서드 목록.
 
 
