@@ -21,4 +21,4 @@ var copyObject = function(target) {
   user.urls.portfolio = 'http://portfolio.com';
   console.log(user.urls.portfolio === user2.urls.portfolio);
   user2.urls.blog = '';
-  console.log(user.urls.blog === user2.urls.blog); 
+  console.log(user.urls.blog === user2.urls.blog);
